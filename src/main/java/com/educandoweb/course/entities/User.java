@@ -2,6 +2,11 @@ package com.educandoweb.course.entities;
 
 import java.io.Serializable;
 import java.util.Objects;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 /**
  * Implementa a interface Serializable, indicando que meu objeto pode ser transformado
@@ -11,10 +16,19 @@ import java.util.Objects;
  * @author Antonio Rizério JR
  *
  */
+
+// Sempre fazer o import da especificação, no caso: jakarta.persistence //
+@Entity
+// Sempre renomear o nome da tabela no banco, para não ter conflito com palavras
+// reservadas //
+@Table(name = "tb_user")
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	// Estratégia para geração da chave primaria: IDENTITY //
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	private String name;
