@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -41,6 +44,18 @@ public class User implements Serializable {
 	
 	// Não cria o metodo 'Set' pq não vamos trocar essa lista momento nenhum //
 	// O atributo User está mapeado do outro lado, entidade Order, pelo atributo 'client' //
+	// Foi criada uma associação dupla, na hora de chamar User ou Order, temos um Loop infinito //
+	// Por conta disso colca-se um JsonIgnore em um dos lados //
+	// Biblioteca Jackson responsável por tratar da serialização Java - Json //
+	/**
+	 * Quando vc tem uma associação Muitos para Um, se você carregar um objeto do lado do muitos, EX
+	 * Order -> User, o User vem automaticamente. Agora do lado um para muitos, User -> Orders, O JPA não 
+	 * carrega os objetos do lado do muitos por padrão -> lazy loading. No caso o Jackson que serializou
+	 * o Json, ele solicita os pedidos do banco de dados -No caso a Classe Order-, 
+	 * que por padrão não viriam, JPA por padrão não traz coleções de dados, Lazy Loading. O Jackson
+	 * opera no final do ciclo de vida, chamando o banco novamente.
+	 */
+	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 	
