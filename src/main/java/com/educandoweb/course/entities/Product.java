@@ -3,14 +3,14 @@ package com.educandoweb.course.entities;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "tb_product")
@@ -30,7 +30,16 @@ public class Product implements Serializable {
 	// Instancio para que minha coleção não comece valendo NULL, agora começa vazia, porém
 	// instanciada. Set é uma interface, utilizo uma classe correspondente a essa interface
 	// HashSet.
-	@Transient
+ // @Transient: faz com que o JPA não reconheça esse campo //
+	/**
+	 * JoinTable - name: nome da tabela no banco de dados;
+	 * 		- joinColumns: chave estrangeira referente a tabela de Produto;
+	 *      - inverseJoinColumns: chave estrangeira da outra entidade;
+	 */
+	@ManyToMany
+	@JoinTable(name = "tb_product_category", 
+			   joinColumns = @JoinColumn(name = "product_id"),
+			   inverseJoinColumns = @JoinColumn(name = "category_id") )
 	private Set<Category> categories = new HashSet<>();
 	
 	public Product() {
