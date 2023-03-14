@@ -34,7 +34,6 @@ public class OrderItem implements Serializable {
 	
 	
 	
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -70,7 +69,10 @@ public class OrderItem implements Serializable {
 		this.id.setOrder(order);
 	}
 	
-	@JsonIgnore
+	public Double getSubTotal() {
+		return getPrice() * getQuantity();
+	}
+	
 	public Product getProduct() {
 		return id.getProduct();
 	}
