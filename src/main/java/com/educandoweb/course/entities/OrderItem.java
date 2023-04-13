@@ -31,8 +31,7 @@ public class OrderItem implements Serializable {
 		this.quantity = quantity;
 		this.price = price;
 	}
-	
-	
+
 	
 	@Override
 	public int hashCode() {
@@ -59,18 +58,16 @@ public class OrderItem implements Serializable {
 		return true;
 	}
 
-
-
+	public Double getSubTotal() {
+		return getPrice() * getQuantity();
+	}
+	
 	@JsonIgnore
 	public Order getOrder() {
 		return id.getOrder();
 	}
 	public void setOrder(Order order) {
 		this.id.setOrder(order);
-	}
-	
-	public Double getSubTotal() {
-		return getPrice() * getQuantity();
 	}
 	
 	public Product getProduct() {

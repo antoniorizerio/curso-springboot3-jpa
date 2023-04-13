@@ -1,13 +1,18 @@
 package com.educandoweb.course.resources;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
 import com.educandoweb.course.entities.User;
 import com.educandoweb.course.services.UserService;
 
@@ -39,6 +44,30 @@ public class UserResource {
 	public ResponseEntity<User> findById(@PathVariable Long id) {
 		User obj = userService.findById(id);
 		return ResponseEntity.ok().body(obj);
+	}
+	
+	/*
+	 * Quando inserimos um recurso o retorno correto não é 200 e sim 201 (Novo Recurso Criado).
+	 * Usamos @RequestBody: Annotation indicating a method parameter should be bound to the body 
+	 * of the web request.
+	 * 
+	 */
+	@PostMapping
+	public ResponseEntity<User> insert(@RequestBody User obj){
+		obj = userService.insert(obj);
+		//
+		// ServletUriComponentsBuilder: Construtor de URI - Uniform Resource Identifier (URI)
+		// fromCurrentRequest(): Retorna a Requisição corrente;
+		// Coloca um PATH na minha URL: /{id}; e coloca valores nessa minha variável;
+		// EX: http:// localhost:8090/users/id/3;
+		// E transforma para URI;
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().
+					path("/{id}").buildAndExpand(obj.getId()).toUri();
+		//
+		// ResponseEntity.created(): Uso o método ResponseEntity.created() 
+		// porque estou criando um recurso;
+
+		return ResponseEntity.created(uri).body(obj);
 	}
 
 }

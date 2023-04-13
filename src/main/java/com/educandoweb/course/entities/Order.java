@@ -49,6 +49,7 @@ public class Order implements Serializable {
 	
 	// Como utilizamos a anotação: @MapsId, fizemos com que as duas entidades tivessem o mesmo ID.
 	// Com isso precisamos da operação Cascade, se Order for excluido o pagamento tbm o será.
+	// * A função do cascade é cascatear operações de persistência.
 	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
 	private Payment payment;
 	
@@ -64,7 +65,6 @@ public class Order implements Serializable {
 		setOrderStatus(orderStatus);
 		this.client = client;
 	}
-
 	
 	public Double getTotal() {
 		double sum = 0.0;
