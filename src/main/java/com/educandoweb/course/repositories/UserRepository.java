@@ -9,6 +9,6 @@ import com.educandoweb.course.entities.User;
 
 // Não precisa da anotação @Repository, pois nossa interface ja estende um componente do Spring: JpaRepository //
 @Repository // opcional //
-public interface UserRepository extends JpaRepository<User, Long>{
+public interface UserRepository extends  JpaRepository<User, Long>{
 
 }
