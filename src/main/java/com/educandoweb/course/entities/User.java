@@ -13,6 +13,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 /**
  * Implementa a interface Serializable, indicando que meu objeto pode ser transformado
@@ -37,9 +40,14 @@ public class User implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotBlank(message = "Campo nome não pode ser NULLO")
 	private String name;
+	@NotBlank
+	@Email(message = "Campo e-mail incorreto" )
 	private String email;
+	@NotBlank(message = "Campo phone não pode ser NULLO")
 	private String phone;
+	@NotBlank(message = "Campo password não pode ser NULLO")
 	private String password;
 	
 	// Não cria o metodo 'Set' pq não vamos trocar essa lista momento nenhum //

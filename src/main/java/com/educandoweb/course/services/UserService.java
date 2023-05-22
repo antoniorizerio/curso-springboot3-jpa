@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import com.educandoweb.course.entities.User;
 import com.educandoweb.course.repositories.UserRepository;
+import com.educandoweb.course.services.exception.ResourceNotFoundException;
 
 //Registrando como um componente do Spring ou @Component //
 @Service // Tem uma semântica melhor, indicando que é um camada de negócio que estende @Component //
@@ -21,7 +22,7 @@ public class UserService {
 	
 	public User findById(Long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public User insert(User obj) {
@@ -29,7 +30,14 @@ public class UserService {
 	}
 	
 	public void delete(Long id) {
-		repository.deleteById(id);
+		Optional<User> usuarioOpt = repository.findById(id);
+		
+		if(usuarioOpt.isPresent()) {
+			repository.deleteById(id);
+		} else {
+			throw new ResourceNotFoundException(id);
+		}
+
 	}
 	
 	public User update(Long id, User obj) {

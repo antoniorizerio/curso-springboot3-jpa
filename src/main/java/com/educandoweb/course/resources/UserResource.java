@@ -18,6 +18,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.educandoweb.course.entities.User;
 import com.educandoweb.course.services.UserService;
 
+import jakarta.validation.Valid;
+
 /**
  * Representa o Controlador Rest referente a entidade User.
  * Representa uma camada de Recursos, os controladores Rest. Esses controladores dependem
@@ -55,7 +57,7 @@ public class UserResource {
 	 * 
 	 */
 	@PostMapping
-	public ResponseEntity<User> insert(@RequestBody User obj){
+	public ResponseEntity<User> insert(@Valid @RequestBody User obj){
 		obj = userService.insert(obj);
 		//
 		// ServletUriComponentsBuilder: Construtor de URI - Uniform Resource Identifier (URI)
