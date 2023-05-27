@@ -42,8 +42,8 @@ public class Product implements Serializable {
 	 */
 	@ManyToMany
 	@JoinTable(name = "tb_product_category", 
-			   joinColumns = @JoinColumn(name = "product_id"),
-			   inverseJoinColumns = @JoinColumn(name = "category_id") )
+			   joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "id"),
+			   inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id") )
 	private Set<Category> categories = new HashSet<>();
 	
 	// Uso de Set para informar para o JPA que não aceito repetições do mesmo Item //

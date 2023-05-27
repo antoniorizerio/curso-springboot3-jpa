@@ -78,7 +78,7 @@ public class UserResource {
 	// @PathVariable: um parâmetro será passado na URL //
 	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		userService.delete(id);
+		userService.delete2(id);
 		// noContent(): Pois na responsta não vai nada, retorna um 204.
 		return ResponseEntity.noContent().build();
 	}

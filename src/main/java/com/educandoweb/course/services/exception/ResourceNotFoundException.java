@@ -16,7 +16,7 @@ public class ResourceNotFoundException extends RuntimeException {
 
 	// {id}: O id do objeto que tentei encontrar e não encontrei //
 	public ResourceNotFoundException(Object id) {
-		super("Resource not found. Id " + id);
+		super("O Recurso não foi encontrado. Id " + id);
 	}
 	
 }

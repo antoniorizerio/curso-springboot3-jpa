@@ -3,10 +3,12 @@ package com.educandoweb.course.services;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import com.educandoweb.course.entities.User;
 import com.educandoweb.course.repositories.UserRepository;
+import com.educandoweb.course.services.exception.DatabaseException;
 import com.educandoweb.course.services.exception.ResourceNotFoundException;
 
 //Registrando como um componente do Spring ou @Component //
@@ -38,6 +40,18 @@ public class UserService {
 			throw new ResourceNotFoundException(id);
 		}
 
+	}
+	
+	public void delete2(Long id) {
+		try {
+			repository.deleteById(id);
+		
+			// Exceção que indica que nenhum valor foi deletado, pois não foi encontrado //
+		} catch (EmptyResultDataAccessException e) {
+			throw new ResourceNotFoundException(id);
+		} catch (DataIntegrityViolationException e) {
+			throw new DatabaseException(e.getMessage());
+		}
 	}
 	
 	public User update(Long id, User obj) {
